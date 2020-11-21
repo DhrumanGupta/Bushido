@@ -10,7 +10,7 @@ namespace Game.Combat
     {
         [SerializeField] float timeBetweenAttacks = 1f;
         [SerializeField] private float attackRange = .5f;
-        [SerializeField] private float damage = 5f;
+        public float damage = 5f;
 
         float timeSinceLastAttack = Mathf.Infinity;
 
@@ -22,7 +22,8 @@ namespace Game.Combat
         public void Attack(GameObject target)
         {
             if (timeSinceLastAttack < timeBetweenAttacks) return;
-            target.GetComponent<Health>().TakeDamage(damage);
+            print($"Attacking {target.name}");
+            target.GetComponent<Health>().SetHealth(target.GetComponent<Health>().health - damage);
             timeSinceLastAttack = 0f;
         }
 
@@ -32,6 +33,11 @@ namespace Game.Combat
             Health targetToTest = combatTarget.GetComponent<Health>();
             bool isInRange = attackRange * attackRange > (transform.position - combatTarget.transform.position).sqrMagnitude;
             return targetToTest != null && !targetToTest.IsKnocked() && isInRange;
+        }
+        
+        public float GetAttackRange()
+        {
+            return attackRange;
         }
 
         private void OnDrawGizmos()

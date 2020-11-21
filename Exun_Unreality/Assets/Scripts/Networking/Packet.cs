@@ -13,14 +13,21 @@ namespace Game.Networking
         welcome = 1,
         spawnPlayer,
         playerPosition,
-        playerRotation
+        playerLeft,
+        enemySpawn,
+        enemyMove,
+        playerKnocked,
+        enemyHealth,
+        enemyAttack
     }
 
     /// <summary>Sent from client to server.</summary>
     public enum ClientPackets
     {
         welcomeReceived = 1,
-        playerMovement
+        playerMovement,
+        playerKnocked,
+        playerAttack
     }
 
     public class Packet : IDisposable
@@ -97,7 +104,7 @@ namespace Game.Networking
             return Length() - readPos; // Return the remaining length (unread)
         }
 
-        /// <summary>Resets the packet instance to allow it to be reused.</summary>
+        /// <summary>Resets the packet Instance to allow it to be reused.</summary>
         /// <param name="_shouldReset">Whether or not to reset the packet.</param>
         public void Reset(bool _shouldReset = true)
         {

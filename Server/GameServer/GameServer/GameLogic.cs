@@ -1,10 +1,11 @@
 ﻿namespace GameServer
 {
-    public class GameLogic
+    class GameLogic
     {
         public static void Update()
         {
             ThreadManager.UpdateMain();
+            Server.Update();
         }
     }
 }

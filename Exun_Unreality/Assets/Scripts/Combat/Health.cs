@@ -1,27 +1,46 @@
 ﻿using System.Collections;
 using Game.Control;
+using Game.Networking;
 using UnityEngine;
 
 namespace Game.Combat
 {
     public class Health : MonoBehaviour
     {
-        [SerializeField] private float maxHealth = 100f;
-        private float health = 0f;
+        [SerializeField] private float maxHealth = 200f;
+        public float health = 0f;
         [SerializeField] private GameObject deathEffect = null;
 
-        private void Start()
+        private void Awake()
         {
             health = maxHealth;
         }
 
-        public void TakeDamage(float damage)
+        private void KnockDown()
         {
-            if (health == 0) return;
+            StartCoroutine(Die(10f));
             
-            health -= damage;
-            health = Mathf.Clamp(health, 0, Mathf.Infinity);
+            if (!TryGetComponent(out PlayerController controller)) return;
+            controller.KnockDownStatus(true);
+        }
 
+        private IEnumerator Die(float time)
+        {
+            yield return new WaitForSeconds(time);
+            if (deathEffect != null) Destroy(Instantiate(deathEffect, transform.position, Quaternion.identity), 5f);
+            if (gameObject.CompareTag("Player")) GameManager.players.Remove(GetComponent<CharacterManager>().id);
+            Destroy(gameObject);
+        }
+
+        public bool IsKnocked()
+        {
+            return health == 0;
+        }
+
+        public void SetHealth(float f)
+        {
+            health = f;
+            health = Mathf.Clamp(health, 0, maxHealth);
             if (health == 0)
             {
                 if (gameObject.CompareTag("Player"))
@@ -29,28 +48,10 @@ namespace Game.Combat
                     KnockDown();
                     return;
                 }
+                print("DEATH");
 
-                StartCoroutine(Die(0f));
+                Destroy(gameObject);
             }
-        }
-        
-        private void KnockDown()
-        {
-            StartCoroutine(Die(10f));
-            if (!TryGetComponent(out PlayerController controller)) return;
-            controller.KnockDown();
-        }
-
-        private IEnumerator Die(float time)
-        {
-            yield return new WaitForSeconds(time);
-            if (deathEffect != null) Destroy(Instantiate(deathEffect, transform.position, Quaternion.identity), 5f);
-            Destroy(gameObject);
-        }
-
-        public bool IsKnocked()
-        {
-            return health == 0;
         }
     }
 }

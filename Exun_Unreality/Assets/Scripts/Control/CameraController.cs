@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Control
 {
     public class CameraController : MonoBehaviour
     {
-        private Transform[] targets = null;
+        public static CameraController Instance;
+        public List<Transform> targets = new List<Transform>();
         
         [SerializeField] private Vector3 offset = Vector3.zero;
         [SerializeField] private float smooth = .4f;
@@ -21,24 +19,23 @@ namespace Game.Control
 
         private Camera cam = null;
 
+        private void Awake()
+        {
+            if (Instance != null) Destroy(this);
+            Instance = this;
+        }
+
         private void Start()
         {
-            Application.targetFrameRate = 60;
+            QualitySettings.vSyncCount = 0;
+            Application.targetFrameRate = 30;
             cam = GetComponent<Camera>();
-            
-            var objectsFound = GameObject.FindGameObjectsWithTag("Player");
-            targets = new Transform[objectsFound.Length];
-
-            for (int i = 0; i < objectsFound.Length; i++)
-            {
-                targets[i] = objectsFound[i].transform;
-            }
         }
 
         // Update is called once per frame
-        void LateUpdate()
+        void Update()
         {
-            if (targets.Length == 0) return;
+            if (targets.Count == 0) return;
 
             var bounds = GetBounds();
 
@@ -58,7 +55,7 @@ namespace Game.Control
         {
             Vector3 centerPoint = Vector3.zero;
             
-            if (targets.Length == 1) 
+            if (targets.Count == 1) 
                 centerPoint = targets[0].position;
             else
                 centerPoint = bounds.center;

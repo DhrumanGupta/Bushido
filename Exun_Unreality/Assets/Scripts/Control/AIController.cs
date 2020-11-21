@@ -10,8 +10,6 @@ namespace Game.Control
         [SerializeField] private GameObject deathEffect = null;
         [SerializeField] private float speed = 4f;
 
-        private GameObject[] players = null;
-
         private Animator animator = null;
         private Fighter fighter = null;
             
@@ -19,12 +17,11 @@ namespace Game.Control
         {
             animator = GetComponent<Animator>();
             fighter = GetComponent<Fighter>();
-            players = GameObject.FindGameObjectsWithTag("Player");
         }
 
         private int relativeIteration = 0;
-        GameObject closestEnemy;
-        void Update()
+        Transform closestEnemy;
+        void FixedUpdate()
         {
             relativeIteration++;
             // Get the closest enemy every 6 frames
@@ -32,7 +29,7 @@ namespace Game.Control
             {
                 float greatestDist = Mathf.Infinity;
 
-                foreach (GameObject currentPlayer in players)
+                foreach (Transform currentPlayer in CameraController.Instance.targets)
                 {
                     if (currentPlayer == null) continue;
                     if (currentPlayer.GetComponent<Health>().IsKnocked()) continue;
@@ -47,14 +44,14 @@ namespace Game.Control
                     }
                 }
             }
-            else if (relativeIteration == 6) relativeIteration = 0;
+            else if (relativeIteration == 3) relativeIteration = 0;
 
             if (closestEnemy == null) return;
             // print(closestEnemy.name);
             
-            if (fighter.CanAttack(closestEnemy))
+            if (fighter.CanAttack(closestEnemy.gameObject))
             {
-                fighter.Attack(closestEnemy);
+                fighter.Attack(closestEnemy.gameObject);
                 animator.SetBool("isMoving", false);
                 return;
             }
