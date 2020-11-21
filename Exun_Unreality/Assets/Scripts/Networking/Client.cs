@@ -67,7 +67,7 @@ namespace Game.Networking
                 };
 
                 receiveBuffer = new byte[dataBufferSize];
-
+                
                 socket.BeginConnect(Instance.ip, Instance.port, ConnectCallback, socket);
             }
 
@@ -281,7 +281,8 @@ namespace Game.Networking
                 { (int) ServerPackets.enemyMove, ClientHandle.EnemyMovement },
                 { (int) ServerPackets.playerKnocked, ClientHandle.PlayerKnocked },
                 { (int) ServerPackets.enemyHealth, ClientHandle.EnemyHealth },
-                { (int) ServerPackets.enemyAttack, ClientHandle.EnemyAttack }
+                { (int) ServerPackets.enemyAttack, ClientHandle.EnemyAttack },
+                { (int) ServerPackets.playerHeal, ClientHandle.PlayerHealed }
             };
             Debug.Log("Initialized packets.");
         }
@@ -297,5 +298,6 @@ namespace Game.Networking
                 Debug.Log("Disconnected");
             }
         }
+        
     }
 }

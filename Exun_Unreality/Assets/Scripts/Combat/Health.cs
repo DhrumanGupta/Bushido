@@ -28,7 +28,10 @@ namespace Game.Combat
         {
             yield return new WaitForSeconds(time);
             if (deathEffect != null) Destroy(Instantiate(deathEffect, transform.position, Quaternion.identity), 5f);
-            if (gameObject.CompareTag("Player")) GameManager.players.Remove(GetComponent<CharacterManager>().id);
+            if (gameObject.CompareTag("Player"))
+            {
+                GameManager.players.Remove(GetComponent<CharacterManager>().id);
+            }
             Destroy(gameObject);
         }
 
@@ -48,10 +51,14 @@ namespace Game.Combat
                     KnockDown();
                     return;
                 }
-                print("DEATH");
-
+                
                 Destroy(gameObject);
             }
+        }
+
+        public void Heal()
+        {
+            health = maxHealth;
         }
     }
 }

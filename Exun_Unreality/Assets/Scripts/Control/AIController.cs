@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Game.Combat;
+using Game.Networking;
 using UnityEngine;
 
 namespace Game.Control
@@ -29,10 +30,12 @@ namespace Game.Control
             {
                 float greatestDist = Mathf.Infinity;
 
-                foreach (Transform currentPlayer in CameraController.Instance.targets)
+                foreach (CharacterManager currentPlayer in CameraController.Instance.targets)
                 {
                     if (currentPlayer == null) continue;
                     if (currentPlayer.GetComponent<Health>().IsKnocked()) continue;
+
+                    Transform transform = currentPlayer.transform;
                     
                     float distance = (transform.position - currentPlayer.transform.position).sqrMagnitude;
                     // print($"{distance} units far away from {currentPlayer.name}");
@@ -40,7 +43,7 @@ namespace Game.Control
                     if (greatestDist * greatestDist > distance)
                     {
                         greatestDist = distance;
-                        closestEnemy = currentPlayer;
+                        closestEnemy = transform;
                     }
                 }
             }

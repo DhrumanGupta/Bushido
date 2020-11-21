@@ -31,5 +31,11 @@ namespace GameServer
             isKnocked = _isKnocked;
             ServerSend.PlayerKnocked(this);
         }
+
+        public void Heal()
+        {
+            KnockDown(false);
+            ServerSend.PlayerHeal(this);
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Game.Combat;
+using Game.Control;
+using UnityEngine;
 
 namespace Game.Networking
 {
@@ -7,17 +9,22 @@ namespace Game.Networking
         public int id;
         public string username;
 
-        private Animator animator;
+        private Animator animator = null;
+        private Health health = null;
+        private PlayerController playerController = null;
         
         private Transform sprite;
         private Vector3 facingLeft = Vector3.zero;
         private Vector3 facingRight = Vector3.zero;
 
-        private bool isKnocked = false;
+        public bool isKnocked = false;
 
         private void Awake()
         {
             animator = GetComponent<Animator>();
+            health = GetComponent<Health>();
+            playerController = GetComponent<PlayerController>();
+            
             sprite = transform.GetChild(0);
             
             facingRight = sprite.localScale;
@@ -44,6 +51,19 @@ namespace Game.Networking
         {
             isKnocked = status;
             animator.SetBool("isKnocked", isKnocked);
+        }
+
+        public void Heal()
+        {
+            if (id == Client.Instance.myId)
+            {
+                playerController.Heal();
+            }
+            else
+            {
+                KnockDownStatus(false);
+            }
+            health.Heal();
         }
     }
 }

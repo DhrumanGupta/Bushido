@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   username: 
+  isKnocked: 0
 --- !u!1001 &6331522345017394513
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34,7 +35,7 @@ PrefabInstance:
     - target: {fileID: 4201588262545274401, guid: 91f335790fc44a64b863c81f672a6ef2,
         type: 3}
       propertyPath: m_MaskInteraction
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4201588262545274401, guid: 91f335790fc44a64b863c81f672a6ef2,
         type: 3}

@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using Game.Networking;
 using UnityEngine;
 
 namespace Game.Control
@@ -6,7 +8,7 @@ namespace Game.Control
     public class CameraController : MonoBehaviour
     {
         public static CameraController Instance;
-        public List<Transform> targets = new List<Transform>();
+        public CharacterManager[] targets;
         
         [SerializeField] private Vector3 offset = Vector3.zero;
         [SerializeField] private float smooth = .4f;
@@ -35,7 +37,8 @@ namespace Game.Control
         // Update is called once per frame
         void Update()
         {
-            if (targets.Count == 0) return;
+            targets = GameManager.players.Values.ToArray();
+            if (targets.Length == 0) return;
 
             var bounds = GetBounds();
 
@@ -55,8 +58,8 @@ namespace Game.Control
         {
             Vector3 centerPoint = Vector3.zero;
             
-            if (targets.Count == 1) 
-                centerPoint = targets[0].position;
+            if (targets.Length == 1) 
+                centerPoint = targets[0].transform.position;
             else
                 centerPoint = bounds.center;
             
@@ -66,10 +69,10 @@ namespace Game.Control
         
         private Bounds GetBounds()
         {
-            var bounds = new Bounds(targets[0].position, Vector3.zero);
+            var bounds = new Bounds(targets[0].transform.position, Vector3.zero);
             foreach (var target in targets)
             {
-                bounds.Encapsulate(target.position);
+                bounds.Encapsulate(target.transform.position);
             }
 
             return bounds;

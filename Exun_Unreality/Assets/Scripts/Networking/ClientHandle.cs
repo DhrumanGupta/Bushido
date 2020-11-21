@@ -79,7 +79,7 @@ namespace Game.Networking
         {
             int _id = _packet.ReadInt();
             bool isKnocked = _packet.ReadBool();
-            
+
             GameManager.players[_id].KnockDownStatus(isKnocked);
         }
 
@@ -97,6 +97,13 @@ namespace Game.Networking
             int playerId = _packet.ReadInt();
 
             GameManager.enemies[enemyId].GetComponent<Fighter>().Attack(GameManager.players?[playerId].gameObject);
+        }
+
+        public static void PlayerHealed(Packet _packet)
+        {
+            int id = _packet.ReadInt();
+
+            GameManager.players[id].Heal();
         }
     }
 }

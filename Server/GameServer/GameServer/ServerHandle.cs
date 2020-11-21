@@ -30,6 +30,7 @@ namespace GameServer
             }
             catch
             {
+                // ignored
             }
         }
 
@@ -49,6 +50,14 @@ namespace GameServer
             {
                 Enemy.enemies[_packet.ReadInt()].TakeDamage(damage);
             }
+        }
+
+        public static void PlayerHeal(int _fromClient, Packet _packet)
+        {
+            Console.WriteLine();
+            int toHealId = _packet.ReadInt();
+            if (Server.clients[_fromClient] == null) return;
+            Server.clients[toHealId].player.Heal();
         }
     }
 }

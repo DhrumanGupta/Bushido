@@ -60,6 +60,15 @@ namespace Game.Networking
                 SendTCPData(_packet);
             }
         }
+
+        public static void PlayerHeal(int toHealId)
+        {
+            using (Packet _packet = new Packet((int) ClientPackets.playerHeal))
+            {
+                _packet.Write(toHealId);
+                SendTCPData(_packet);
+            }
+        }
         #endregion
     }
 }

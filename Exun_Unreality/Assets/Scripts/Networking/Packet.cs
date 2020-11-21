@@ -18,7 +18,8 @@ namespace Game.Networking
         enemyMove,
         playerKnocked,
         enemyHealth,
-        enemyAttack
+        enemyAttack,
+        playerHeal
     }
 
     /// <summary>Sent from client to server.</summary>
@@ -27,7 +28,8 @@ namespace Game.Networking
         welcomeReceived = 1,
         playerMovement,
         playerKnocked,
-        playerAttack
+        playerAttack,
+        playerHeal
     }
 
     public class Packet : IDisposable

@@ -170,5 +170,16 @@ namespace GameServer
                 SendTCPDataToAll(player.id, _packet);
             }
         }
+
+        public static void PlayerHeal(Player player)
+        {
+            Console.WriteLine("Healing Player");
+            using (Packet _packet = new Packet((int) ServerPackets.playerKnocked))
+            {
+                _packet.Write(player.id);
+
+                SendTCPDataToAll(_packet);
+            }
+        }
     }
-}
+}    

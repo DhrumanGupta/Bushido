@@ -56,7 +56,6 @@ namespace Game.Networking
             characterManager.username = _username;
             _player.name = _username;
             players.Add(_id, characterManager);
-            CameraController.Instance.targets.Add(_player.transform);
         }
 
         public void SpawnEnemy(int id, Vector3 position, Quaternion rotation, int type, float health)
@@ -100,7 +99,6 @@ namespace Game.Networking
 
         public static void PlayerLeft(int id)
         {
-            CameraController.Instance.targets.Remove(players[id].transform);
             Destroy(players[id].gameObject);
             players.Remove(id);
             print($"Player {id} has left the game.");

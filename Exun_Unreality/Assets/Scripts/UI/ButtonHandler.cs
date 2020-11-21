@@ -73,15 +73,17 @@ namespace Game.UI
         public void ConnectBtn()
         {
             if (!isIpSet) return;
-            transform.GetChild(0).gameObject.SetActive(false);
+
             Client.Instance.ConnectToServer();
+            transform.GetChild(0).gameObject.SetActive(false);
             StartCoroutine(ShowTutuorial());
+            print($"Button clicked, connecting");
         }
         
         private IEnumerator ShowError(string msg)
         {
             errorText.SetText(msg);
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(2.5f);
             errorText.SetText("");
         }
 
@@ -94,7 +96,10 @@ namespace Game.UI
             tutText.SetText("Click to shoot");
             yield return new WaitForSeconds(3f);
             
-            tutText.SetText("Press E to revive your teammate if defeated");
+            tutText.SetText("Get close and press E to revive your teammate if defeated");
+            yield return new WaitForSeconds(3f);
+            
+            tutText.SetText("You can heal your teammate every 25 seconds.");
             yield return new WaitForSeconds(3f);
             
             tutText.SetText("");

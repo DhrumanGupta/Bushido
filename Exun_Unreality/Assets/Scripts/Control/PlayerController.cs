@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using Game.Combat;
 using Game.Networking;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 namespace Game.Control
 {
@@ -16,21 +17,24 @@ namespace Game.Control
         private Vector3 maxClamp = Vector3.zero;
         
         private Animator animator = null;
-        private Transform walls = null;
         private Fighter fighter = null;
+        private CharacterManager characterController = null;
         
-        private Transform sprite = null;
-        
+        private Transform walls = null;
         private Vector3 facingLeft = Vector3.zero;
         private Vector3 facingRight = Vector3.zero;
         
         private Camera cam = null;
+        private Transform sprite = null;
         
-        
+        [SerializeField] private float healCooldown = 25f;
+        private float timeSinceLastHealed = Mathf.Infinity;
+
         void Awake()
         {
             fighter = GetComponent<Fighter>();
             animator = GetComponent<Animator>();
+            characterController = GetComponent<CharacterManager>();
             cam = Camera.main;
         
             sprite = transform.GetChild(0);
@@ -50,6 +54,9 @@ namespace Game.Control
 
         private void Update()
         {
+            if (isKnocked) return;
+            
+            timeSinceLastHealed += Time.deltaTime;
             CheckAndMove();
             
             if (Input.GetMouseButtonDown(0))
@@ -76,6 +83,24 @@ namespace Game.Control
                 int[] hitEnemies = enemiesHit.ToArray();
                 ClientSend.PlayerAttack(hitEnemies, fighter.damage);
             }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                foreach (var player in GameManager.players.Values)
+                {
+                    if (player.id == characterController.id) continue;
+                    if (!player.isKnocked) continue;
+                    
+                    float range = fighter.GetAttackRange();
+
+                    if ((player.transform.position - transform.position).sqrMagnitude < range * range && timeSinceLastHealed > healCooldown)
+                    {
+                        ClientSend.PlayerHeal(player.id);
+                        healCooldown = 0;
+                        print($"Healing player {player.username}");
+                    }
+                }
+            }
         }
 
         private Vector3 lastSendPos;
@@ -96,8 +121,6 @@ namespace Game.Control
         
         private void CheckAndMove()
         {
-            if (isKnocked) return;
-            
             // Check for input and add/subtract from the vector
             #if UNITY_STANDALONE || UNITY_EDITOR
             
@@ -132,6 +155,12 @@ namespace Game.Control
             isKnocked = status;
             animator.SetBool("isKnocked", isKnocked);
             ClientSend.PlayerKnocked(isKnocked);
+        }
+
+        public void Heal()
+        {
+            isKnocked = false;
+            animator.SetBool("isKnocked", isKnocked);
         }
     }
     

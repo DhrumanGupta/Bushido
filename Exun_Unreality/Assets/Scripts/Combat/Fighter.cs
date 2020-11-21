@@ -22,7 +22,6 @@ namespace Game.Combat
         public void Attack(GameObject target)
         {
             if (timeSinceLastAttack < timeBetweenAttacks) return;
-            print($"Attacking {target.name}");
             target.GetComponent<Health>().SetHealth(target.GetComponent<Health>().health - damage);
             timeSinceLastAttack = 0f;
         }

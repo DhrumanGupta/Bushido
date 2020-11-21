@@ -125,7 +125,8 @@ namespace GameServer
                 { (int) ClientPackets.welcomeReceived, ServerHandle.WelcomeReceived },
                 { (int) ClientPackets.playerMovement, ServerHandle.PlayerMovement },
                 { (int) ClientPackets.playerKnocked, ServerHandle.PlayerKnocked },
-                { (int) ClientPackets.playerAttack, ServerHandle.EnemyTakeDamage }
+                { (int) ClientPackets.playerAttack, ServerHandle.EnemyTakeDamage },
+                { (int) ClientPackets.playerHeal, ServerHandle.PlayerHeal }
             };
             Console.WriteLine("Initialized packets.");
         }

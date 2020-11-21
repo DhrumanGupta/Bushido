@@ -8,12 +8,13 @@ namespace GameServer
     {
         private static Timer timer1;
         private static Random random;
+        private static int spawnTime = 3500;
         public static void InitTimer()
         {
             random = new Random();
             timer1 = new Timer();
             timer1.Elapsed += new ElapsedEventHandler(timer1_Tick);
-            timer1.Interval = 2000; // in miliseconds
+            timer1.Interval = spawnTime; // in miliseconds
             timer1.Start();
         }
 
@@ -34,7 +35,7 @@ namespace GameServer
                 type = Enemy.Type.Shuriken;
             }
             Enemy enemy = new Enemy(1.5f, type);
-            timer1.Interval = 2000; // in miliseconds
+            timer1.Interval = spawnTime; // in miliseconds
             timer1.Start();
         }
     }
