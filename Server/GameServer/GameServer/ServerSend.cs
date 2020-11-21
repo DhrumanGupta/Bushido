@@ -154,12 +154,11 @@ namespace GameServer
             {
                 _packet.Write(enemy.id);
                 _packet.Write(enemy.health);
-                
+
                 SendTCPDataToAll(_packet);
             }
         }
-        #endregion
-
+        
         public static void PlayerKnocked(Player player)
         {
             using (Packet _packet = new Packet((int) ServerPackets.playerKnocked))
@@ -174,12 +173,22 @@ namespace GameServer
         public static void PlayerHeal(Player player)
         {
             Console.WriteLine("Healing Player");
-            using (Packet _packet = new Packet((int) ServerPackets.playerKnocked))
+            using (Packet _packet = new Packet((int) ServerPackets.playerHeal))
             {
                 _packet.Write(player.id);
 
                 SendTCPDataToAll(_packet);
             }
         }
+
+        public static void PlayerSwordSwing(int fromClient)
+        {
+            using (Packet packet = new Packet((int) ServerPackets.playerSwordSwing))
+            {
+                packet.Write(fromClient);
+                SendUDPDataToAll(fromClient, packet);
+            }
+        }
+        #endregion
     }
 }    

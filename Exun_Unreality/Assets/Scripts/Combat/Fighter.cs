@@ -31,7 +31,7 @@ namespace Game.Combat
             if (combatTarget == null) { return false; }
             Health targetToTest = combatTarget.GetComponent<Health>();
             bool isInRange = attackRange * attackRange > (transform.position - combatTarget.transform.position).sqrMagnitude;
-            return targetToTest != null && !targetToTest.IsKnocked() && isInRange;
+            return targetToTest != null && !targetToTest.IsKnocked() && isInRange && timeSinceLastAttack > timeBetweenAttacks;
         }
         
         public float GetAttackRange()

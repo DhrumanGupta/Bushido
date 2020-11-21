@@ -65,5 +65,15 @@ namespace Game.Networking
             }
             health.Heal();
         }
+
+        public void SetHealth(float newHealth)
+        {
+            health.SetHealth(newHealth);
+        }
+
+        public void Attack()
+        {
+            animator.SetTrigger("attack");
+        }
     }
 }

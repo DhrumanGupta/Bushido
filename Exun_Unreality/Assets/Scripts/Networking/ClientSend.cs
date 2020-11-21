@@ -69,6 +69,15 @@ namespace Game.Networking
                 SendTCPData(_packet);
             }
         }
+
+        public static void PlayerSwordSwing(int fromId)
+        {
+            using (Packet _packet = new Packet((int) ClientPackets.playerSwordSwing))
+            {
+                _packet.Write(fromId);
+                SendTCPData(_packet);
+            }
+        }
         #endregion
     }
 }

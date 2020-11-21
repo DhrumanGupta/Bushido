@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   username: 
+  isKnocked: 0
 --- !u!1001 &1778516326627272162
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -210,6 +211,11 @@ PrefabInstance:
         type: 3}
       propertyPath: damage
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6015345079645401002, guid: 91f335790fc44a64b863c81f672a6ef2,
+        type: 3}
+      propertyPath: timeBetweenAttacks
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6368559751562365344, guid: 91f335790fc44a64b863c81f672a6ef2,
         type: 3}

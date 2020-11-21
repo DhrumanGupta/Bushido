@@ -10,6 +10,7 @@ namespace Game.Combat
         [SerializeField] private float maxHealth = 200f;
         public float health = 0f;
         [SerializeField] private GameObject deathEffect = null;
+        private Coroutine destroy = null;
 
         private void Awake()
         {
@@ -18,7 +19,7 @@ namespace Game.Combat
 
         private void KnockDown()
         {
-            StartCoroutine(Die(10f));
+            destroy = StartCoroutine(Die(10f));
             
             if (!TryGetComponent(out PlayerController controller)) return;
             controller.KnockDownStatus(true);
@@ -59,6 +60,7 @@ namespace Game.Combat
         public void Heal()
         {
             health = maxHealth;
+            StopCoroutine(destroy);
         }
     }
 }

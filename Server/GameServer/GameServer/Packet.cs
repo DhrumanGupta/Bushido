@@ -17,7 +17,8 @@ namespace GameServer
         playerKnocked,
         enemyHealth,
         enemyAttack,
-        playerHeal
+        playerHeal,
+        playerSwordSwing
     }
 
     /// <summary>Sent from client to server.</summary>
@@ -27,7 +28,8 @@ namespace GameServer
         playerMovement,
         playerKnocked,
         playerAttack,
-        playerHeal
+        playerHeal,
+        playerSwordSwing
     }
 
     public class Packet : IDisposable

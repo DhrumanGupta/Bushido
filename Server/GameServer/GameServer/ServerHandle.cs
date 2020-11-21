@@ -48,16 +48,20 @@ namespace GameServer
             int length = _packet.ReadInt();
             for (int i = 0; i < length; i++)
             {
-                Enemy.enemies[_packet.ReadInt()].TakeDamage(damage);
+                Enemy.enemies[_packet.ReadInt()].TakeDamage(damage, _fromClient);
             }
         }
 
         public static void PlayerHeal(int _fromClient, Packet _packet)
         {
-            Console.WriteLine();
             int toHealId = _packet.ReadInt();
             if (Server.clients[_fromClient] == null) return;
             Server.clients[toHealId].player.Heal();
+        }
+
+        public static void PlayerSwordSwing(int _fromClient, Packet _packet)
+        {
+            ServerSend.PlayerSwordSwing(_fromClient);
         }
     }
 }

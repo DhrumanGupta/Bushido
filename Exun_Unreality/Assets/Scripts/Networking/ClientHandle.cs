@@ -37,7 +37,7 @@ namespace Game.Networking
                 int _id = _packet.ReadInt();
                 Vector3 _position = _packet.ReadVector3();
 
-                GameManager.players[_id].MoveTo(_position);
+                GameManager.players[_id]?.MoveTo(_position);
             }
             catch
             {}
@@ -68,7 +68,7 @@ namespace Game.Networking
                 int _id = _packet.ReadInt();
                 Vector3 _position = _packet.ReadVector3();
 
-                GameManager.enemies[_id].MoveTo(_position);
+                GameManager.enemies[_id]?.MoveTo(_position);
             }
             catch
             {
@@ -80,15 +80,15 @@ namespace Game.Networking
             int _id = _packet.ReadInt();
             bool isKnocked = _packet.ReadBool();
 
-            GameManager.players[_id].KnockDownStatus(isKnocked);
+            GameManager.players[_id]?.KnockDownStatus(isKnocked);
         }
 
         public static void EnemyHealth(Packet _packet)
         {
-            int id = _packet.ReadInt();
+            int enemyId = _packet.ReadInt();
             float health = _packet.ReadFloat();
-            
-            GameManager.enemies[id].GetComponent<Health>().SetHealth(health);
+
+            GameManager.enemies[enemyId]?.SetHealth(health);
         }
 
         public static void EnemyAttack(Packet _packet)
@@ -96,14 +96,21 @@ namespace Game.Networking
             int enemyId = _packet.ReadInt();
             int playerId = _packet.ReadInt();
 
-            GameManager.enemies[enemyId].GetComponent<Fighter>().Attack(GameManager.players?[playerId].gameObject);
+            GameManager.enemies[enemyId]?.GetComponent<Fighter>().Attack(GameManager.players?[playerId].gameObject);
         }
 
         public static void PlayerHealed(Packet _packet)
         {
             int id = _packet.ReadInt();
 
-            GameManager.players[id].Heal();
+            GameManager.players[id]?.Heal();
+        }
+
+        public static void PlayerSwordSwing(Packet _packet)
+        {
+            int id = _packet.ReadInt();
+            
+            GameManager.players[id]?.Attack();
         }
     }
 }

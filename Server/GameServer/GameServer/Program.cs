@@ -24,27 +24,50 @@ namespace GameServer
             Console.Title = "Game Server";
             isRunning = true;
             
-            int port;
+            int port = 7000;
+            int maxPlayers = 2;
 
-            while (true)
-            {
-                Console.WriteLine("On what port do you want to host?");
-                try
-                {
-                    port = Int32.Parse(Console.ReadLine());
-                    if (port < 1024 || port > 49151)
-                    {
-                        Console.WriteLine("Invalid Port! \nPorts can only range from 1024 - 49151");
-                        continue;
-                    }
-                    
-                    break;
-                }
-                catch
-                {
-                    Console.WriteLine("Please enter a valid port! \nPorts can only range from 1024 - 49151\n");
-                }
-            }
+            // while (true)
+            // {
+            //     Console.WriteLine("How many players do you want in the lobby?");
+            //     try
+            //     {
+            //         maxPlayers = Int32.Parse(Console.ReadLine()!);
+            //
+            //         if (maxPlayers < 2)
+            //         {
+            //             Console.WriteLine("Please put a value equal to or greater than 2!\n");
+            //             continue;
+            //         }
+            //
+            //         break;
+            //     }
+            //     catch
+            //     {
+            //         Console.WriteLine("Please enter a valid number!");
+            //     }
+            //     
+            // }
+
+            // while (true)
+            // {
+            //     Console.WriteLine("On what port do you want to host?");
+            //     try
+            //     {
+            //         port = Int32.Parse(Console.ReadLine());
+            //         if (port < 1024 || port > 49151)
+            //         {
+            //             Console.WriteLine("Invalid Port! \nPorts can only range from 1024 - 49151");
+            //             continue;
+            //         }
+            //         
+            //         break;
+            //     }
+            //     catch
+            //     {
+            //         Console.WriteLine("Please enter a valid port! \nPorts can only range from 1024 - 49151\n");
+            //     }
+            // }
 
             Console.WriteLine(
                 "\n[i] IMPORTANT [i]" +

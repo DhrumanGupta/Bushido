@@ -282,7 +282,8 @@ namespace Game.Networking
                 { (int) ServerPackets.playerKnocked, ClientHandle.PlayerKnocked },
                 { (int) ServerPackets.enemyHealth, ClientHandle.EnemyHealth },
                 { (int) ServerPackets.enemyAttack, ClientHandle.EnemyAttack },
-                { (int) ServerPackets.playerHeal, ClientHandle.PlayerHealed }
+                { (int) ServerPackets.playerHeal, ClientHandle.PlayerHealed },
+                { (int) ServerPackets.playerSwordSwing, ClientHandle.PlayerSwordSwing }
             };
             Debug.Log("Initialized packets.");
         }

@@ -27,6 +27,7 @@ namespace GameServer
         private Vector3 max = new Vector3(9.38f, 3.84f, 0);
 
         public float speed;
+        
         public float health;
         public float damage;
         public float range;
@@ -122,7 +123,7 @@ namespace GameServer
             return (float)(Server.random.NextDouble() * (maximum - minimum) + minimum);
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(float damage, int fromId)
         {
             health -= damage;
             if (health >= 0)

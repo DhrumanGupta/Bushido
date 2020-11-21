@@ -18,7 +18,7 @@ namespace Game.Control
         
         private Animator animator = null;
         private Fighter fighter = null;
-        private CharacterManager characterController = null;
+        private CharacterManager characterManager = null;
         
         private Transform walls = null;
         private Vector3 facingLeft = Vector3.zero;
@@ -34,7 +34,7 @@ namespace Game.Control
         {
             fighter = GetComponent<Fighter>();
             animator = GetComponent<Animator>();
-            characterController = GetComponent<CharacterManager>();
+            characterManager = GetComponent<CharacterManager>();
             cam = Camera.main;
         
             sprite = transform.GetChild(0);
@@ -61,6 +61,7 @@ namespace Game.Control
             
             if (Input.GetMouseButtonDown(0))
             {
+                ClientSend.PlayerSwordSwing(characterManager.id);
                 animator.SetTrigger("attack");
                 Vector3 direction =  cam.ScreenToWorldPoint(Input.mousePosition) - transform.position;
                 Debug.DrawRay(transform.position, direction, Color.green, 3f);
@@ -88,7 +89,7 @@ namespace Game.Control
             {
                 foreach (var player in GameManager.players.Values)
                 {
-                    if (player.id == characterController.id) continue;
+                    if (player.id == characterManager.id) continue;
                     if (!player.isKnocked) continue;
                     
                     float range = fighter.GetAttackRange();
