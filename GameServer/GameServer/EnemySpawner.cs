@@ -21,7 +21,7 @@ namespace GameServer
         private static void timer1_Tick(object sender, EventArgs e)
         {
             spawnTime -= 50;
-            if (spawnTime < 350) spawnTime = 350; 
+            if (spawnTime < 150) spawnTime = 150; 
             int randomN = random.Next(0, 3);
             Enemy.Type type;
             if (randomN > 0.66f)

@@ -70,8 +70,10 @@ namespace Game.Control
 
                 List<int> enemiesHit = new List<int>();
                     
-                foreach (var hit in rayHit)
+                for (int i = 0; i < enemiesHit.Count; i++)
                 {
+                    if (i == 5) break;
+                    var hit = rayHit[i];
                     GameObject target = hit.collider.gameObject;
                     if (!target.CompareTag("Enemy")) continue;
                     if (fighter.CanAttack(target))
@@ -80,7 +82,8 @@ namespace Game.Control
                     }
                 }
                 
-                if (enemiesHit.Count == 0) return;
+                if (enemiesHit.Count == 0) return; 
+                fighter.timeSinceLastAttack = 0f;
                 int[] hitEnemies = enemiesHit.ToArray();
                 ClientSend.PlayerAttack(hitEnemies, fighter.damage);
             }

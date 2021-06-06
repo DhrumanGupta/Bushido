@@ -12,7 +12,7 @@ namespace Game.Combat
         [SerializeField] private float attackRange = .5f;
         public float damage = 5f;
 
-        float timeSinceLastAttack = Mathf.Infinity;
+        public float timeSinceLastAttack = Mathf.Infinity;
 
         private void Update()
         {
